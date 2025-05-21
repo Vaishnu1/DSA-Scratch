@@ -1,0 +1,21 @@
+name: Scheduled Upload
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs at 6:00 UTC every day (adjust as needed)
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Merge scheduled-upload branch
+        run: |
+          git config --global user.name "vaishnu1"
+          git config --global user.email "vaishnu753880@gmail.com"
+          git fetch origin scheduled-upload
+          git merge origin/scheduled-upload --no-edit
+          git push origin main
